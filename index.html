@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Matrix Fervent</title>
+    <title>Matrix</title>
     <style>
         /* Подключение Google Fonts */
         @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
@@ -26,10 +26,11 @@
 
     <script>
 	// Функция для извлечения значения параметра из URL
-        function getQueryParam(param) {
-            const urlParams = new URLSearchParams(window.location.search);
-            return decodeURIComponent(urlParams.get(param));
-        }
+		function getQueryParam(param) {
+			const urlParams = new URLSearchParams(window.location.search);
+			const value = urlParams.get(param);
+			return value === null ? undefined : decodeURIComponent(value);
+		}
         // Получение элемента canvas и его контекста
         const canvas = document.getElementById('matrixCanvas');
         const ctx = canvas.getContext('2d');
