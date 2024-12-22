@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrix Fervent</title>
+    <style>
+        /* Подключение Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+        /* Установка основного фона и стилей */
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: black;
+            color: lime;
+        }
+
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="matrixCanvas"></canvas>
+
+    <script>
+        // Получение элемента canvas и его контекста
+        const canvas = document.getElementById('matrixCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Установка размеров холста
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // Символы и их параметры
+        const characters = 'アカサタナハマヤラワヰヱヲンdenisferventmnopqrstuvwxyz0123456789';
+        const fontSize = 14;
+        const columns = canvas.width / fontSize; // Число колонок текста
+
+        // Создаем массив для хранения позиций колонок
+        const drops = Array(Math.floor(columns)).fill(0);
+
+        // Рисуем падающие символы
+        function draw() {
+            // Затемнение холста с небольшим прозрачным черным слоем
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Устанавливаем стиль текста
+            ctx.fillStyle = '#0f0'; // Зелёный текст
+            ctx.font = `${fontSize}px monospace`;
+
+            // Рисуем символы
+            for (let i = 0; i < drops.length; i++) {
+                const char = characters.charAt(Math.floor(Math.random() * characters.length));
+                ctx.fillText(char, i * fontSize, drops[i] * fontSize);
+
+                // Сбрасываем на начало после достижения нижней части экрана с вероятностью
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+
+                // Увеличиваем позицию по вертикали
+                drops[i]++;
+            }
+			
+			// Добавление полупрозрачного текста "THE MATRIX" в центре с эффектом свечения
+			ctx.save(); // Сохраняем текущие настройки контекста
+			ctx.font = `${fontSize * 15}px ''`;
+			ctx.fillStyle = '#fefefe'; // Основной цвет текста
+			ctx.shadowColor = 'rgba(20,180,65, 0.2)'; // Цвет свечения
+			ctx.shadowBlur = 10; // Интенсивность свечения
+			const text = "FERVENT";
+			const textWidth = ctx.measureText(text).width;
+			ctx.fillText(text, (canvas.width - textWidth) / 2, canvas.height / 2);
+			ctx.restore(); // Восстанавливаем настройки контекста
+        }
+
+        // Запускаем анимацию
+        setInterval(draw, 40);
+
+        // Обновляем размеры холста при изменении размера окна
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
