@@ -25,6 +25,11 @@
     <canvas id="matrixCanvas"></canvas>
 
     <script>
+	// Функция для извлечения значения параметра из URL
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return decodeURIComponent(urlParams.get(param));
+        }
         // Получение элемента canvas и его контекста
         const canvas = document.getElementById('matrixCanvas');
         const ctx = canvas.getContext('2d');
@@ -71,7 +76,7 @@
 			ctx.fillStyle = '#fefefe'; // Основной цвет текста
 			ctx.shadowColor = 'rgba(20,180,65, 0.2)'; // Цвет свечения
 			ctx.shadowBlur = 10; // Интенсивность свечения
-			const text = "FERVENT";
+			const text = getQueryParam('text') || "FERVENT";
 			const textWidth = ctx.measureText(text).width;
 			ctx.fillText(text, (canvas.width - textWidth) / 2, canvas.height / 2);
 			ctx.restore(); // Восстанавливаем настройки контекста
